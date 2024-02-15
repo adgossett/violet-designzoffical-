@@ -1,6 +1,6 @@
 <?php
 // Your Account API & List ID
-$api_key = "c3846fa1dc6a517b5b364c603359af67-us9"; // YOUR-API-KEY-HERE
+$api_key = "d8bb69cdef209df4442cd4992d237b13-us20"; // YOUR-API-KEY-HERE
 $list_id = "1f71448818"; // YOUR-LIST-ID-HERE
 
 // Check $recipient
