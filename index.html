@@ -270,73 +270,58 @@
 			<!-- Content End -->
 
 
-
-			
-   <!-- Include EmailJS library -->
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-			
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var subscribeForm = document.getElementById('signup-form');
+			
+  // Replace 'YOUR_API_KEY' with your actual API key
+const apiKey = 'iaqRhog1o5D4TrX3w';
+const endpoint = 'https://violet-designz.com'; // Replace with your endpoint URL
 
-        subscribeForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('signup-form');
 
-            // Fetch form values
-            var fname = document.getElementById('fname').value.trim();
-            var email = document.getElementById('email').value.trim();
-            var honeypot = document.getElementById('honeypot').value.trim();
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submit action
 
-            // Check if the honeypot field is filled (anti-spam measure)
-            if (honeypot !== '') {
-                return false; // Don't proceed if honeypot field is filled
+        // Fetch values from the form
+        const fname = document.getElementById('fname').value;
+        const email = document.getElementById('email').value;
+
+        // Prepare data to send
+        const formData = new FormData();
+        formData.append('fname', fname);
+        formData.append('email', email);
+
+        // Prepare the Fetch request
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}` // Authorization header with API key
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-
-            // Validate email address
-            if (!validateEmail(email)) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-
-            // Your EmailJS user ID
-            var userID = 'iaqRhog1o5D4TrX3w'; // Replace with your actual user ID
-
-            // Send email via EmailJS
-            emailjs.init(userID);
-            emailjs.send("service_8v983kl", "template_a0p4b5r", {
-                from_name: fname,
-                email: email
-            }).then(function(response) {
-                alert('Thank you for subscribing!'); // Success notification
-                console.log('SUCCESS!', response.status, response.text);
-                document.getElementById('form-response').innerHTML = 'Thank you for subscribing!';
-                subscribeForm.reset(); // Reset form after successful submission
-            }, function(error) {
-                alert('Subscription failed. Please try again later.');
-                console.log('FAILED...', error);
-                document.getElementById('form-response').innerHTML = 'Oops! Something went wrong.';
-            });
+            return response.json(); // Assuming server returns JSON response
+        })
+        .then(data => {
+            // Handle success
+            console.log('Success:', data);
+            document.getElementById('form-response').textContent = 'Subscription successful!';
+        })
+        .catch(error => {
+            // Handle error
+            console.error('Error:', error);
+            document.getElementById('form-response').textContent = 'An error occurred. Please try again later.';
         });
-
-        // Function to validate email address format
-        function validateEmail(email) {
-            var re = /\S+@\S+\.\S+/;
-            return re.test(email);
-        }
     });
-</script>
+});
+<script>
 
-
-
-<script type="text/javascript">
-    (function(){
-       emailjs.init({
-         publicKey: "iaqRhog1o5D4TrX3w",
-       });
-    })();
- </script>
 		</div>
 	</div>
+
 
 	<!-- Js -->
 	<script src="js/jquery-3.2.1.min.js"></script>
