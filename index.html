@@ -270,6 +270,63 @@
 			</div>
 			<!-- Content End -->
 
+
+
+			
+    <!--subscribers-->
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var subscribeForm = document.querySelector('.newsletter-form');
+
+        subscribeForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Fetch the subscriber's email address
+            var subscriberEmail = subscribeForm.querySelector('input[type="email"]').value.trim();
+
+            // Check if the email address is valid
+            if (!validateEmail(subscriberEmail)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Your EmailJS user ID
+            var userID = 'zVO3tPkEq4iwiR949'; // Replace with your actual user ID
+
+            // Send email via EmailJS
+            emailjs.init(userID);
+            emailjs.send("service_lua1c77", "template_vbm8303", { // Use your EmailJS service name and template ID
+                email: subscriberEmail
+            }).then(function(response) {
+                alert('Thank you for subscribing!'); // Success notification
+                console.log('SUCCESS!', response.status, response.text);
+            }, function(error) {
+                alert('Subscription failed. Please try again later.');
+                console.log('FAILED...', error);
+            });
+
+            // Optional: You can clear the form after submission
+            subscribeForm.reset();
+        });
+
+        // Function to validate email address format
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+    });
+</script>
+
+
+<script type="text/javascript">
+    (function(){
+       emailjs.init({
+         publicKey: "CGFtmLlX8ovPvnA2R",
+       });
+    })();
+ </script>
+
 		</div>
 	</div>
 
