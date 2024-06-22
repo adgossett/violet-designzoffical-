@@ -229,46 +229,29 @@
 				<!-- Intro Section End -->
 
 				<!-- Subscribe Modal -->
-<div id="subscribe-modal" class="section-block pt-0 pb-30 background-none hide">
-    <div class="section-block pt-40 pb-0">
-        <div class="row">
-            <div class="column width-12">
-                <div class="modal-dialog-inner">
-                    <div class="form-container">
-                        <div class="row">
-                            <div class="column width-12">
-                                <form id="signup-form" class="signup-form">
-                                    <div class="row">
-                                        <div class="column width-12">
-                                            <div class="field-wrapper">
-                                                <input type="text" id="fname" name="fname" class="form-name form-element rounded medium left" placeholder="First Name*" tabindex="2" required>
-                                            </div>
-                                        </div>
-                                        <div class="column width-12">
-                                            <div class="field-wrapper">
-                                                <input type="email" id="email" name="email" class="form-email form-element rounded medium left" placeholder="Email address*" tabindex="2" required>
-                                            </div>
-                                        </div>
-                                        <div class="column width-5">
-                                            <input type="submit" value="Subscribe" class="form-submit button rounded medium bkg-theme bkg-hover-theme color-white color-hover-white">
-                                        </div>
-                                    </div>
-                                    <input type="text" id="honeypot" name="honeypot" class="form-honeypot form-element rounded medium">
-                                    <div id="form-response" class="form-response show">* No spamming here, promise!</div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Subscribe Modal -->
+
 
 			</div>
 			<!-- Content End -->
-
+<!-- HTML Form -->
+<form id="signup-form" class="signup-form" onsubmit="return sendEmail();">
+    <div class="row">
+        <div class="column width-12">
+            <div class="field-wrapper">
+                <input type="text" id="fname" name="fname" class="form-name form-element rounded medium left" placeholder="First Name*" tabindex="2" required>
+            </div>
+        </div>
+        <div class="column width-12">
+            <div class="field-wrapper">
+                <input type="email" id="email" name="email" class="form-email form-element rounded medium left" placeholder="Email address*" tabindex="2" required>
+            </div>
+        </div>
+        <div class="column width-5">
+            <input type="submit" value="Subscribe" class="form-submit button rounded medium bkg-theme bkg-hover-theme color-white color-hover-white">
+        </div>
+    </div>
+    <div id="form-response" class="form-response show">* No spamming here, promise!</div>
+</form>
 
 <script>
 			
@@ -318,6 +301,35 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 <script>
+
+	<!-- Include EmailJS SDK -->
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+    // Initialize EmailJS with your user ID (API key) obtained from EmailJS dashboard
+    emailjs.init('iaqRhog1o5D4TrX3w'); // Replace with your actual user ID (API key)
+
+    // Function to send email
+    function sendEmail() {
+        const fname = document.getElementById('fname').value;
+        const email = document.getElementById('email').value;
+
+        // Use EmailJS SDK to send email
+        emailjs.send('service_8v983kl', 'template_a0p4b5r', {
+            fname: fname,
+            email: email
+        })
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            document.getElementById('form-response').textContent = 'Email sent successfully!';
+        }, function(error) {
+            console.error('FAILED...', error);
+            document.getElementById('form-response').textContent = 'Failed to send email. Please try again later.';
+        });
+
+        return false; // Prevent the form from submitting
+    }
+</script>
+
 
 		</div>
 	</div>
