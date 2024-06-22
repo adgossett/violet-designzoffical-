@@ -277,7 +277,7 @@
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
     (function() {
-        emailjs.init('CGFtmLlX8ovPvnA2R'); // Replace with your EmailJS user ID
+        emailjs.init('FiC9odF3iLUhS5S_5'); // Replace with your EmailJS user ID
 
         document.getElementById('signup-form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -300,7 +300,7 @@
             };
 
             // Send email using EmailJS
-            emailjs.send('service_tdpqhd7', 'template_cr3ff3j', formData)
+            emailjs.send('service_8v983kl', 'template_a0p4b5r', formData)
                 .then(function(response) {
                     console.log('Email sent:', response);
                     document.getElementById('form-response').innerHTML = 'Thank you for subscribing!';
@@ -314,7 +314,13 @@
 </script>
 
 
-
+<script type="text/javascript">
+    (function(){
+       emailjs.init({
+         publicKey: "FiC9odF3iLUhS5S_5",
+       });
+    })();
+ </script>
 		</div>
 	</div>
 
