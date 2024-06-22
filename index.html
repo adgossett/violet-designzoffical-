@@ -275,48 +275,62 @@
    <!-- Include EmailJS library -->
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
-    (function() {
-        emailjs.init('userID'); // Replace with your EmailJS user ID
+    document.addEventListener('DOMContentLoaded', function() {
+        var subscribeForm = document.getElementById('signup-form');
 
-        document.getElementById('signup-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+        subscribeForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
 
-            // Get form values
+            // Fetch form values
             var fname = document.getElementById('fname').value.trim();
             var email = document.getElementById('email').value.trim();
-            var honeypot = document.getElementById('honeypot').value.trim(); // This is your honeypot field
+            var honeypot = document.getElementById('honeypot').value.trim();
 
-            // Check if honeypot field is empty (anti-spam measure)
+            // Check if the honeypot field is filled (anti-spam measure)
             if (honeypot !== '') {
                 return false; // Don't proceed if honeypot field is filled
             }
 
-            // Prepare data to be sent via EmailJS
-            var formData = {
-                from_name: fname,
-                email: email,
-                // Add any other variables you need to send
-            };
+            // Validate email address
+            if (!validateEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
 
-            // Send email using EmailJS
-            emailjs.send('service_8v983kl', 'template_a0p4b5r', formData)
-                .then(function(response) {
-                    console.log('Email sent:', response);
-                    document.getElementById('form-response').innerHTML = 'Thank you for subscribing!';
-                    document.getElementById('signup-form').reset(); // Reset form after successful submission
-                }, function(error) {
-                    console.error('Error sending email:', error);
-                    document.getElementById('form-response').innerHTML = 'Oops! Something went wrong.';
-                });
+            // Your EmailJS user ID
+            var userID = 'iaqRhog1o5D4TrX3w'; // Replace with your actual user ID
+
+            // Send email via EmailJS
+            emailjs.init(userID);
+            emailjs.send("service_8v983kl", "template_a0p4b5r", {
+                from_name: fname,
+                email: email
+            }).then(function(response) {
+                alert('Thank you for subscribing!'); // Success notification
+                console.log('SUCCESS!', response.status, response.text);
+                document.getElementById('form-response').innerHTML = 'Thank you for subscribing!';
+                subscribeForm.reset(); // Reset form after successful submission
+            }, function(error) {
+                alert('Subscription failed. Please try again later.');
+                console.log('FAILED...', error);
+                document.getElementById('form-response').innerHTML = 'Oops! Something went wrong.';
+            });
         });
-    })();
+
+        // Function to validate email address format
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+    });
 </script>
+
 
 
 <script type="text/javascript">
     (function(){
        emailjs.init({
-         publicKey: "FiC9odF3iLUhS5S_5",
+         publicKey: "iaqRhog1o5D4TrX3w",
        });
     })();
  </script>
