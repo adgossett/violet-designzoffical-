@@ -253,85 +253,38 @@
     <div id="form-response" class="form-response show">* No spamming here, promise!</div>
 </form>
 
-<script>
-			
-  // Replace 'YOUR_API_KEY' with your actual API key
-const apiKey = 'iaqRhog1o5D4TrX3w';
-const endpoint = 'https://dashboard.emailjs.com/'; // Replace with your endpoint URL
-
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('signup-form');
-
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submit action
-
-        // Fetch values from the form
-        const fname = document.getElementById('fname').value;
-        const email = document.getElementById('email').value;
-
-        // Prepare data to send
-        const formData = new FormData();
-        formData.append('fname', fname);
-        formData.append('email', email);
-
-        // Prepare the Fetch request
-        fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${apiKey}` // Authorization header with API key
-            },
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json(); // Assuming server returns JSON response
-        })
-        .then(data => {
-            // Handle success
-            console.log('Success:', data);
-            document.getElementById('form-response').textContent = 'Subscription successful!';
-        })
-        .catch(error => {
-            // Handle error
-            console.error('Error:', error);
-            document.getElementById('form-response').textContent = 'An error occurred. Please try again later.';
-        });
-    });
-});
-<script>
-
-	<!-- Include EmailJS SDK -->
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
-    // Initialize EmailJS with your user ID (API key) obtained from EmailJS dashboard
-    emailjs.init('iaqRhog1o5D4TrX3w'); // Replace with your actual user ID (API key)
+    // Initialize EmailJS with your user ID
+    emailjs.init('iaqRhog1o5D4TrX3w'); // Replace with your actual EmailJS user ID
 
-    // Function to send email
     function sendEmail() {
-        const fname = document.getElementById('fname').value;
-        const email = document.getElementById('email').value;
+        // Prevent the default form submission
+        event.preventDefault();
 
-        // Use EmailJS SDK to send email
-        emailjs.send('service_8v983kl', 'template_a0p4b5r', {
-            fname: fname,
-            email: email
-        })
-        .then(function(response) {
-            console.log('SUCCESS!', response.status, response.text);
-            document.getElementById('form-response').textContent = 'Email sent successfully!';
-        }, function(error) {
-            console.error('FAILED...', error);
-            document.getElementById('form-response').textContent = 'Failed to send email. Please try again later.';
-        });
+        // Get user input
+        const formData = {
+            fname: document.getElementById('fname').value,
+            email: document.getElementById('email').value
+        };
 
-        return false; // Prevent the form from submitting
+        // Send email
+        emailjs.send('service_8v983kl', 'template_a0p4b5r', formData)
+            .then(function(response) {
+                console.log('Email sent!', response);
+                alert('Subscription successful!'); // Optional: Show a success message
+                document.getElementById('signup-form').reset(); // Optional: Clear the form
+            }, function(error) {
+                console.error('Error sending email:', error);
+                alert('Subscription failed. Please try again.'); // Optional: Show an error message
+            });
+
+        return false; // Prevent the form from refreshing the page
     }
 </script>
 
 
-		</div>
+
 	</div>
 
 
